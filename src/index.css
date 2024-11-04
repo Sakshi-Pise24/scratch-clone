@@ -1,13 +1,34 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom Styles */
+
+/* Workspace Styles */
+.workspace {
+    @apply bg-white border-gray-300 border-2 relative; /* Use Tailwind's utility classes */
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Sidebar Styles */
+.sidebar {
+    @apply bg-gray-100 w-64 p-4; /* Adjust sidebar width and padding */
+}
+
+/* Block Styles */
+.block {
+    @apply p-2 mb-2 text-center bg-blue-200 rounded shadow hover:bg-blue-300 cursor-pointer; /* Styles for draggable blocks */
+}
+
+/* Sprite Styles */
+.sprite {
+    @apply absolute z-10; /* Ensures sprites are above other content */
+}
+
+/* Example custom styles for specific elements */
+h1 {
+    @apply text-2xl font-bold text-center my-4; /* Example title styling */
+}
+
+button {
+    @apply bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600; /* Button styling */
 }
