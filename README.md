@@ -1,70 +1,48 @@
-# Getting Started with Create React App
+# Scratch Clone - Visual Code Editor
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Welcome to **Scratch Clone** – an interactive, visual code editor inspired by the Scratch platform by MIT. This project provides an intuitive environment for learning programming fundamentals, offering drag-and-drop coding that turns code blocks into fun animations and interactive actions.
 
-## Available Scripts
+## 🚀 Project Overview
 
-In the project directory, you can run:
+**Scratch Clone** is built using React and aims to make programming accessible to beginners. By offering a visual coding interface, it allows users to quickly create animations, control sprite movements, and experience fundamental coding concepts without writing complex code.
 
-### `npm start`
+This project is ideal for learners, educators, or anyone interested in understanding the basics of coding in a visual and engaging way.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Key Features
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- **Drag-and-Drop Interface**: Easily drag blocks to create actions, motions, and controls.
+- **Multiple Sprites**: Add and manipulate multiple sprites in the workspace, with each sprite having customizable properties.
+- **Collision Detection**: Enable sprites to react to each other, triggering actions upon collision.
+- **Customizable Animations**: Set unique animations and actions, including rotation, movement, and sprite swapping.
+- **Event-Based Controls**: Trigger animations and actions based on specific events, making coding dynamic and interactive.
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🛠️ Tech Stack
 
-### `npm run build`
+| Component    | Technology            |
+|--------------|-----------------------|
+| Frontend     | React, JavaScript     |
+| Styling      | CSS with TailwindCSS  |
+| Animations   | ReScript React (optional for added functionality) |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+---
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## 📦 Installation & Setup
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+To run **Scratch Clone** locally on your machine, follow these steps:
 
-### `npm run eject`
+### Prerequisites
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Ensure you have the following installed on your system:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+- **Node.js** (v14 or later)
+- **npm** (Node Package Manager, comes with Node.js)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Steps
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Clone the repository**:
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+   Clone the project repository from GitHub to your local machine.
+   ```bash
+   git clone <[repository-link](https://github.com/Sakshi-Pise24/scratch-clone)>
