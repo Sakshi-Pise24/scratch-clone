@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Sidebar from './components/Sidebar';
 import Sprite from './components/Sprite';
-import MotionBlock from './components/MotionBlock';
 
 const App = () => {
     const [sprites, setSprites] = useState([]);
@@ -11,38 +10,42 @@ const App = () => {
 
     const addSprite = (sprite) => {
         const newSpriteId = `${sprite.id}-${Date.now()}`;
-        setSprites(prev => [...prev, {
-            ...sprite,
-            id: newSpriteId,
-            position: { x: 50, y: 50 },
-            rotation: 0
-        }]);
+        setSprites(prev => [
+            ...prev,
+            {
+                ...sprite,
+                id: newSpriteId,
+                position: { x: 50, y: 50 },
+                rotation: 0,
+            }
+        ]);
         setSpriteActions(prev => ({
             ...prev,
-            [newSpriteId]: []
+            [newSpriteId]: [] // Initialize actions for the new sprite
         }));
     };
 
-    // New function to handle sprite selection
     const handleSpriteClick = (spriteId) => {
         setSelectedSprite(spriteId);
     };
 
-    const handleMove = (id, newX, newY) => {
+    // Wrap handleMove in useCallback
+    const handleMove = useCallback((id, newX, newY) => {
         setSprites(prevSprites =>
             prevSprites.map(sprite =>
                 sprite.id === id ? {
                     ...sprite,
                     position: {
-                        x: Math.max(0, Math.min(newX, 750)),
-                        y: Math.max(0, Math.min(newY, 550))
+                        x: Math.max(0, Math.min(newX, 750)), // Keep within bounds
+                        y: Math.max(0, Math.min(newY, 550)),
                     }
                 } : sprite
             )
         );
-    };
+    }, []);
 
-    const handleRotate = (id, angle) => {
+    // Wrap handleRotate in useCallback
+    const handleRotate = useCallback((id, angle) => {
         setSprites(prevSprites =>
             prevSprites.map(sprite =>
                 sprite.id === id ? { 
@@ -51,9 +54,10 @@ const App = () => {
                 } : sprite
             )
         );
-    };
+    }, []);
 
-    const handleAction = (sprite, action) => {
+    // Wrap handleAction in useCallback
+    const handleAction = useCallback((sprite, action) => {
         switch (action.type) {
             case 'move':
                 const angleInRadians = sprite.rotation * (Math.PI / 180);
@@ -76,23 +80,22 @@ const App = () => {
                     const repeatedActions = Array(action.value).fill(lastAction);
                     setSpriteActions(prev => ({
                         ...prev,
-                        [sprite.id]: [...previousActions, ...repeatedActions]
+                        [sprite.id]: [...previousActions, ...repeatedActions],
                     }));
                 }
                 break;
             default:
                 break;
         }
-    };
+    }, [handleMove, handleRotate, spriteActions]);
 
     const addActionToSprite = (spriteId, action) => {
         setSpriteActions(prev => ({
             ...prev,
-            [spriteId]: [...(prev[spriteId] || []), action]
+            [spriteId]: [...(prev[spriteId] || []), action], // Append action
         }));
     };
 
-    // Updated handleDrop to work with workspace and sprite drops
     const handleDrop = (e, targetArea = 'workspace') => {
         e.preventDefault();
         const data = e.dataTransfer.getData('action');
@@ -101,12 +104,10 @@ const App = () => {
         const action = JSON.parse(data);
         
         if (targetArea === 'workspace') {
-            // If dropping on workspace, use selected sprite
             if (selectedSprite) {
                 addActionToSprite(selectedSprite, action);
             }
         } else {
-            // If dropping directly on a sprite
             addActionToSprite(targetArea, action);
         }
     };
@@ -126,30 +127,26 @@ const App = () => {
                 return {
                     ...prev,
                     [sprite1Id]: sprite2Actions,
-                    [sprite2Id]: sprite1Actions
+                    [sprite2Id]: sprite1Actions,
                 };
             }
             return prev;
         });
     };
 
-    // Animation and collision detection loop
     useEffect(() => {
         if (!isPlaying) return;
-
+    
         const animationInterval = setInterval(() => {
             setSprites(prevSprites => {
                 const newSprites = [...prevSprites];
-                
-                // Move sprites based on their actions
                 newSprites.forEach(sprite => {
                     const currentAction = spriteActions[sprite.id]?.[0];
                     if (currentAction) {
                         handleAction(sprite, currentAction);
                     }
                 });
-
-                // Check for collisions
+    
                 for (let i = 0; i < newSprites.length; i++) {
                     for (let j = i + 1; j < newSprites.length; j++) {
                         if (checkCollision(newSprites[i], newSprites[j])) {
@@ -157,11 +154,10 @@ const App = () => {
                         }
                     }
                 }
-
+    
                 return newSprites;
             });
-
-            // Rotate actions queue for continuous animation
+    
             setSpriteActions(prev => {
                 const newActions = { ...prev };
                 Object.keys(newActions).forEach(spriteId => {
@@ -173,9 +169,9 @@ const App = () => {
                 return newActions;
             });
         }, 100);
-
+    
         return () => clearInterval(animationInterval);
-    }, [isPlaying]);
+    }, [isPlaying, handleAction, spriteActions]);
 
     return (
         <div className="flex h-screen">
@@ -186,7 +182,6 @@ const App = () => {
                 }} 
             />
             <div className="flex-1 relative">
-                {/* Controls */}
                 <div className="absolute top-4 right-4 space-x-4">
                     <button 
                         onClick={() => setIsPlaying(!isPlaying)}
@@ -198,7 +193,6 @@ const App = () => {
                     </button>
                 </div>
 
-                {/* Workspace */}
                 <div
                     className="workspace bg-white m-4"
                     onDrop={(e) => handleDrop(e, 'workspace')}
@@ -209,7 +203,7 @@ const App = () => {
                         border: '2px solid #ccc', 
                         position: 'relative',
                         borderRadius: '8px',
-                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)'
+                        boxShadow: '0 2px 4px rgba(0,0,0,0.1)',
                     }}
                 >
                     {sprites.map((sprite) => (
@@ -228,7 +222,6 @@ const App = () => {
                     ))}
                 </div>
 
-                {/* Action List */}
                 <div className="absolute bottom-4 left-4 bg-white p-4 rounded shadow">
                     <h3 className="font-bold mb-2">Sprite Actions</h3>
                     {sprites.map(sprite => (
@@ -243,8 +236,8 @@ const App = () => {
                             <div className="text-sm">
                                 Actions: {spriteActions[sprite.id]?.length || 0}
                                 {spriteActions[sprite.id]?.map((action, index) => (
-                                    <div key={index} className="ml-2 text-gray-600">
-                                        {action.type}: {action.value}
+                                    <div key={index} className="text-xs">
+                                        {JSON.stringify(action)}
                                     </div>
                                 ))}
                             </div>
@@ -257,3 +250,4 @@ const App = () => {
 };
 
 export default App;
+
